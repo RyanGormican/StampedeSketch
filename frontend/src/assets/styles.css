@@ -1,0 +1,31 @@
+h3 {
+  margin: 40px 0 0;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  color: #42b983;
+}
+.title
+{
+	font-size: 40px;
+	text-align:center;
+	display:flex;
+	justify-content:center;
+	align-items: center;
+	min-height:80vh;
+}
+.links {
+  display: flex;
+  position: absolute;
+  top: 10px;
+  right: 75px;
+  height: 10vh; 
+  z-index:5;
+}
