@@ -1,44 +1,53 @@
 <template>
   <div>
-   {{remainingTime}}
+    {{ remainingTime }}
   </div>
 </template>
 
 <script lang="ts">
-    import { defineComponent } from 'vue';
-    import { Icon } from '@iconify/vue';
-  export default defineComponent({
+import { defineComponent } from 'vue';
+import { Icon } from '@iconify/vue';
+
+export default defineComponent({
   name: 'Timer',
   components: {
-  Icon,
-  },
-  date() {
-  return {
-  remainingTime: this.duration,
-  timeInterval: null,
-  };
+    Icon,
   },
   props: {
-  duration: {
-    type:Number,
-    required: true,
+    duration: {
+      type: Number,
+      required: true,
+    },
   },
-  methods : {
-  startTimer(){
-  this.timeInterval = setInterval(() => {
-  if (this.remainingTime > 0) {
-    this.remainingTime--;
-  }
-  },1000);
-  }
+  data() {
+    return {
+      remainingTime: this.duration,
+      timerInterval: null,
+    };
+  },
+  methods: {
+    startTimer() {
+      this.timerInterval = setInterval(() => {
+        if (this.remainingTime > 0) {
+          this.remainingTime--;
+        } else {
+          this.stopTimer();
+        }
+      }, 1000);
+    },
+    stopTimer() {
+      clearInterval(this.timerInterval);
+    },
   },
   mounted() {
-  this.startTimer();
+    this.startTimer();
   },
-  }});
+  beforeUnmount() {
+    this.stopTimer();
+  },
+});
 </script>
 
 <style scoped>
-  @import '@/assets/styles.css';
-
+@import '@/assets/styles.css';
 </style>
