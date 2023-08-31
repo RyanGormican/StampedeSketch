@@ -15,6 +15,7 @@
       StampedeSketch
     </div>
     <Timer :duration="10"></Timer>
+    <Board></Board>
   </div>
 </template>
 
@@ -22,11 +23,13 @@
   import { defineComponent } from 'vue';
   import { Icon } from '@iconify/vue';
   import Timer from '@/components/Timer.vue';
+  import Board from '@/components/Board.vue';
   export default defineComponent({
   name: 'Main',
   components: {
   Icon,
   Timer,
+  Board,
   },
   });
 </script>
