@@ -12,9 +12,14 @@
       </a>
     </div>
     <div class="title">
-      StampedeSketch
+      <h1> StampedeSketch</h1>
     </div>
-    <Timer :duration="10"></Timer>
+      <div class="buttons">
+      <button type="button" class="btn btn-primary" @click="generatePort">Create </button>
+          <input type="text" placeholder="Join Code" />
+          <button type="button" class="btn btn-primary">Join</button>
+      </div>
+    <Timer :duration="15"></Timer>
   </div>
 </template>
 
@@ -22,12 +27,35 @@
   import { defineComponent } from 'vue';
   import { Icon } from '@iconify/vue';
   import Timer from '@/components/Timer.vue';
+  import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+  import 'bootstrap/dist/css/bootstrap.css'
+  import 'bootstrap-vue/dist/bootstrap-vue.css'
   import Board from '@/components/Board.vue';
   export default defineComponent({
   name: 'Main',
   components: {
   Icon,
   Timer,
+  },
+  methods: {
+  generatePort() {
+
+  fetch('http://localhost:4000/generate-port', {
+  method: 'POST',
+  headers: {
+  'Content-Type': 'application/json',
+  },
+  })
+  .then((response) => response.json())
+  .then((data) => {
+
+  const { code, port } = data;
+  alert(`Port ${port} created with code: ${code}`);
+  })
+  .catch((error) => {
+  console.error('Error generating port:', error);
+  });
+  },
   },
   });
 </script>

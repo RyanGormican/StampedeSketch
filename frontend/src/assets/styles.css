@@ -19,7 +19,14 @@ a {
 	display:flex;
 	justify-content:center;
 	align-items: center;
-	min-height:80vh;
+	margin-top:40vh;
+}
+.buttons {
+	display: flex;
+	margin-top: 10px;
+	align-items:center;
+	justify-content:center;
+	gap: 2px;
 }
 .links {
   display: flex;

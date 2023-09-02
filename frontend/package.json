@@ -8,7 +8,9 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "vue": "^3.2.13"
+    "bootstrap": "^5.3.1",
+    "bootstrap-vue": "^2.23.1",
+    "vue": "^3.3.4"
   },
   "devDependencies": {
     "@iconify/vue": "^4.1.1",
