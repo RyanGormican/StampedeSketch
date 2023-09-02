@@ -6,7 +6,7 @@ app.use(express.json());
 
 app.use(cors());
 const activePorts = new Map();
-let currentPort = 4000; // Starting port number
+let currentPort = 4000; 
 const portCodeMap = {};
 
 app.post('/generate-port', (req, res) => {
