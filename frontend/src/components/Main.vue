@@ -15,7 +15,6 @@
       StampedeSketch
     </div>
     <Timer :duration="10"></Timer>
-    <Board></Board>
   </div>
 </template>
 
@@ -29,7 +28,6 @@
   components: {
   Icon,
   Timer,
-  Board,
   },
   });
 </script>

@@ -22,7 +22,7 @@ export default defineComponent({
   data() {
     return {
       remainingTime: this.duration,
-      timerInterval: null,
+      timerInterval: null as number | null,
     };
   },
   methods: {
@@ -36,7 +36,7 @@ export default defineComponent({
       }, 1000);
     },
     stopTimer() {
-      clearInterval(this.timerInterval);
+      clearInterval(this.timerInterval as any);
     },
   },
   mounted() {
