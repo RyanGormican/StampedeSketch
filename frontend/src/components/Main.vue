@@ -39,12 +39,13 @@
   },
   methods: {
   generatePort() {
-
+  const userToken = Math.random().toString(36).substring(2, 12);
   fetch('http://localhost:4000/generate-port', {
   method: 'POST',
   headers: {
   'Content-Type': 'application/json',
   },
+  body: JSON.stringify({userToken}),
   })
   .then((response) => response.json())
   .then((data) => {
