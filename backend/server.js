@@ -16,7 +16,7 @@ app.post('/generate-port', (req, res) => {
   activePorts.set(currentPort, []);
   activePorts.get(currentPort).push(userToken);
   res.json({ code, port: currentPort });
-  currentPort++;
+  currentPort++; //
 });
 
 app.get('/active-ports', (req, res) => {
