@@ -40,7 +40,7 @@ app.post('/join-port', (req, res) => {
   const port = req.body.joinCode;
 
   if (activePorts.has(port)) {
-    activePorts.get(port).push({ userToken, lastHeartbeat: Date.now() });
+    activePorts.get(port).push({ userToken, lastHeartbeat: Date.now(), state: 'waiting' });
     res.json({ port });
   } else {
     res.status(404).json({ error: 'Port not found' });
@@ -70,7 +70,17 @@ app.post('/heartbeat', (req, res) => {
 
   res.status(200).send('Heartbeat received');
 });
+app.post('/start-game/:port', (req, res) => {
+  const port = parseInt(req.params.port);
 
+  if (activePorts.has(port)) {
+    const portData = activePorts.get(port);
+    portData[0].state = 'game';
+    res.sendStatus(200);
+  } else {
+    res.status(404).json({ error: 'Port not found' });
+  }
+});
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

@@ -48,8 +48,21 @@ methods: {
       }, 1000);
  
     },
-    startGame() {
-    },
+   startGame() {
+    fetch(`http://localhost:4000/start-game/${this.port}`, {
+      method: 'POST',
+    })
+    .then(response => {
+      if (response.ok) {
+        this.$router.push(`/gameroom/${this.port}/${this.currentuser}`);
+      } else {
+        console.error('Failed to start the game.');
+      }
+    })
+    .catch((error) => {
+      console.error('Error starting the game:', error);
+    });
+  },
     startHeartbeat() {
       setInterval(() => {
         fetch('http://localhost:4000/heartbeat', {
