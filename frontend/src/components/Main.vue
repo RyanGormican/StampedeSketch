@@ -14,11 +14,11 @@
     <div class="title">
       <h1> StampedeSketch</h1>
     </div>
-      <div class="buttons">
+    <div class="buttons">
       <button type="button" class="btn btn-primary" @click="generatePort">Create </button>
-          <input type="text" placeholder="Join Code" />
-          <button type="button" class="btn btn-primary">Join</button>
-      </div>
+      <input v-model="joinCode" type="number" placeholder="Join Code" />
+      <button type="button" class="btn btn-primary" @click="joinPort">Join</button>
+    </div>
     <Timer :duration="15"></Timer>
   </div>
 </template>
@@ -37,6 +37,11 @@
   Icon,
   Timer,
   },
+  data() {
+  return {
+  joinCode: '', // Bind this input field to joinCode
+  };
+  },
   methods: {
   generatePort() {
   const userToken = Math.random().toString(36).substring(2, 12);
@@ -45,23 +50,42 @@
   headers: {
   'Content-Type': 'application/json',
   },
-  body: JSON.stringify({userToken}),
+  body: JSON.stringify({userToken, joinCode: this.joinCode}),
   })
   .then((response) => response.json())
   .then((data) => {
 
   const { code, port } = data;
-  alert(`Port ${port} created with code: ${code}`);
+  this.$router.push(`/waitingroom/${port}/${userToken}`);
   })
   .catch((error) => {
   console.error('Error generating port:', error);
+  });
+  },
+  joinPort() {
+  const userToken = Math.random().toString(36).substring(2, 12);
+  fetch('http://localhost:4000/join-port', {
+  method: 'POST',
+  headers: {
+  'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({ userToken, joinCode: this.joinCode }),
+  })
+  .then((response) => response.json())
+  .then((data) => {
+  const { port } = data;
+
+  this.$router.push(`/waitingroom/${port}/${userToken}`);
+  })
+  .catch((error) => {
+  console.error('Error joining port:', error);
   });
   },
   },
   });
 </script>
 
-<style scoped>
+<style scoped="">
   @import '@/assets/styles.css';
 
 </style>
