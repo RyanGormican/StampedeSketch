@@ -32,7 +32,7 @@ export default {
     this.fetchUsers();
     this.startFetchingUsers();
     this.startHeartbeat();
-
+    this.checkState();
 
   },
   methods: {
@@ -66,6 +66,20 @@ export default {
           body: JSON.stringify({ userToken: this.currentuser }),
         });
       }, 1000);
+    },
+     checkState() {
+      setInterval(() => {
+        fetch(`http://localhost:4000/check-game-state/${this.port}`)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.state === 'game') {
+              this.$router.push(`/gameroom/${this.port}/${this.currentuser}`);
+            }
+          })
+          .catch((error) => {
+            console.error('Error checking game state:', error);
+          });
+      }, 1000); 
     },
   },
   beforeDestroy() {

@@ -72,8 +72,32 @@ app.post('/heartbeat', (req, res) => {
   res.status(200).send('Heartbeat received');
 });
 app.post('/start-game/:port', (req, res) => {
-  
+  const port = parseInt(req.params.port);
+
+  if (activePorts.has(port)) {
+    const portData = activePorts.get(port);
+    portData[0].state = 'game';
+    res.json({ message: 'Game started', state: 'game' });
+  } else {
+    res.status(404).json({ error: 'Port not found' });
+  }
 });
+
+app.get('/check-game-state/:port', (req, res) => {
+  const port = parseInt(req.params.port);
+
+  if (activePorts.has(port)) {
+    const portData = activePorts.get(port);
+    if (portData[0].state === 'game') {
+      res.json({ state: 'game' });
+    } else {
+      res.json({ state: 'waiting' });
+    }
+  } else {
+    res.status(404).json({ error: 'Port not found' });
+  }
+});
+
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

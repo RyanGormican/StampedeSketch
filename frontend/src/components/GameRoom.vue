@@ -25,7 +25,6 @@ export default {
     this.startFetchingUsers();
     this.startHeartbeat();
 
-
    
   },
   methods: {
