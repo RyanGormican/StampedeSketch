@@ -1,8 +1,15 @@
 <template>
+<div>
   <div>
     <ul>
       <li v-for="(user, index) in users" :key="index">{{ user }}</li>
     </ul>
+  </div>
+  <div>
+        <p>Current Round: {{ currentRound }}</p>
+        <p>Current Mode: {{ currentMode }}</p>
+        <p>Time Left: {{ roundTimeLeft }} seconds</p>
+      </div>
   </div>
 </template>
 
@@ -16,6 +23,9 @@ export default {
       port: null,
       currentuser: null,
       users: [],
+      currentRound: null,
+      currentMode: null,
+      roundTimeLeft: null,
     };
   },
   created() {
@@ -43,7 +53,7 @@ export default {
         this.fetchUsers();
       }, 1000);
     },
-    startHeartbeat() {
+     startHeartbeat() {
       setInterval(() => {
         fetch('http://localhost:4000/heartbeat', {
           method: 'POST',
@@ -51,8 +61,26 @@ export default {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({ userToken: this.currentuser }),
+        }).then(() => {
+          this.checkRound(); 
         });
       }, 1000);
+    },
+    checkRound() {
+      fetch(`http://localhost:4000/check-game-state/${this.port}`)
+        .then((response) => response.json())
+        .then((data) => {
+           this.currentRound = data.round;
+            this.currentMode = data.mode;
+            this.roundTimeLeft = data.time;
+         
+          } else {
+        
+          }
+        })
+        .catch((error) => {
+          console.error('Error checking round:', error);
+        });
     },
   },
 };
