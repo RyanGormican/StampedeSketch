@@ -34,13 +34,6 @@ export default {
     this.startHeartbeat();
 
 
-    this.socket = io('http://localhost:4000');
-    this.socket.on('game-started', (data) => {
-      if (data.port === this.port && data.state === 'game') {
-        // Redirect to the game room when the game starts
-        this.$router.push(`/gameroom/${this.port}/${this.currentuser}`);
-      }
-    });
   },
   methods: {
     fetchUsers() {

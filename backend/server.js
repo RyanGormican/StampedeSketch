@@ -72,19 +72,7 @@ app.post('/heartbeat', (req, res) => {
   res.status(200).send('Heartbeat received');
 });
 app.post('/start-game/:port', (req, res) => {
-  const port = parseInt(req.params.port);
-
-  if (activePorts.has(port)) {
-    const portData = activePorts.get(port);
-    portData[0].state = 'game';
-
-    
-    io.emit('game-started', { port, state: 'game' });
-
-    res.sendStatus(200);
-  } else {
-    res.status(404).json({ error: 'Port not found' });
-  }
+  
 });
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
