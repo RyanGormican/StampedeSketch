@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-
+const httpServer = require('http').createServer(app);
+const io = require('socket.io')(httpServer);
 app.use(express.json());
 
 app.use(cors());
@@ -76,6 +77,10 @@ app.post('/start-game/:port', (req, res) => {
   if (activePorts.has(port)) {
     const portData = activePorts.get(port);
     portData[0].state = 'game';
+
+    
+    io.emit('game-started', { port, state: 'game' });
+
     res.sendStatus(200);
   } else {
     res.status(404).json({ error: 'Port not found' });
